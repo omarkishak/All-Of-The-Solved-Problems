@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int userNum, numSum = 0;
+
+    cout << "Enter a number: ";
+    cin >> userNum;
+
+    while (true) {
+        if (userNum <= 0 ) {
+            cout << "Invalid number";
+            break;
+        }
+        numSum += userNum % 10;
+        userNum = userNum / 10;
+
+        if (userNum == 0) {
+            break;
+        }
+    }
+    cout << "The sum is: " << numSum;
+
+    return 0;
+}
