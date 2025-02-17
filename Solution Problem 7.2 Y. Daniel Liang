@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int num, max, min;
+
+    cout << "Enter six integers: ";
+    
+    cin >> num;
+    max = min = num;
+
+    for (int i = 1; i < 6; i++) {
+        cin >> num;
+        if (num > max) max = num;
+        if (num < min) min = num;
+    }
+
+    cout << "Largest number: " << max << endl;
+    cout << "Smallest number: " << min << endl;
+
+    return 0;
+}
