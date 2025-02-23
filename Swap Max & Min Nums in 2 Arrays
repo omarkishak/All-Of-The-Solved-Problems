@@ -1,0 +1,25 @@
+# include<iostream>
+using namespace std;
+
+void main() {
+    int a[10],Max=0,Min=99999,maxloc,minloc;
+    cout<<" please enter 10 numbers";
+    for(int i=0;i<10;i++){
+        cin>>a[i];
+        if(a[i]>Max){
+            Max=a[i];
+            maxloc=i;
+        }
+        if(a[i]<Min){
+            Min=a[i];
+            minloc=i;
+        }
+
+    }
+    a[maxloc]= Min;
+    a[minloc]= Max;
+    for(int i=0;i<10;i++){
+        cout<<a[i]<<endl;
+    }
+    system("pause");
+}
