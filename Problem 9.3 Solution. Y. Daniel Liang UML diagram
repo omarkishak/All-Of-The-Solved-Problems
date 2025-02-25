@@ -1,0 +1,18 @@
+-----------------------------------------
+|                Account                |
+-----------------------------------------
+| - id: int                             |
+| - balance: double                     |
+| - annualInterestRate: double          |
+-----------------------------------------
+| + Account()                           |
+| + getId(): int                        |
+| + setId(id: int): void                |
+| + getBalance(): double                |
+| + setBalance(balance: double): void   |
+| + getAnnualInterestRate(): double     |
+| + setAnnualInterestRate(rate: double) |
+| + getMonthlyInterestRate(): double    |
+| + withdraw(amount: double): void      |
+| + deposit(amount: double): void       |
+-----------------------------------------
