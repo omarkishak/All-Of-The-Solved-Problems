@@ -1,0 +1,20 @@
+#include <iostream>
+#include <cmath>
+#include <sstream>
+using namespace std;
+
+int main(){
+    double userInput, numSum=0;
+
+    cout << "Enter 5 numbers: " << '\n';
+    for(int i = 0; i < 5; i++) {
+        cin >> userInput;
+
+        numSum += userInput;
+    }
+
+    cout << "The sum is: " << numSum;
+
+    return 0;
+
+}
