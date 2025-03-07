@@ -1,0 +1,69 @@
+#include <iostream>
+#include <cmath>
+#include <sstream>
+using namespace std;
+
+class Car {
+private:
+    int price;
+    string model, name;
+
+public:
+
+    Car() {
+        price = 0;
+        model = "a";
+        name = "a";
+    }
+
+    Car(int newPrice, string newModel, string newName) {
+        price = newPrice;
+        model = newModel;
+        name = newName;
+    }
+
+    void setCarPrice(int p) {
+        price = p;
+    }
+
+    void setCarModel(string m) {
+        model = m;
+
+    }
+
+    void setCarName(string n) {
+        name = n;
+    }
+
+    int getCarPrice() {
+        return price;
+    }
+
+    string getCarModel() {
+        return model;
+    }
+
+    string getCarName() {
+        return name;
+    }
+};
+
+
+int main() {
+   int userPrice;
+    string userName, userModel;
+
+    cout << "Enter car price: " << '\n';
+    cin >> userPrice;
+
+    cout << "Enter car name and model respectively: ";
+    cin >> userName;
+    cin >> userModel;
+
+    Car car1(userPrice, userModel, userName);
+
+    cout << "car model is: " << car1.getCarModel() << '\n';
+    cout << "car name is: " << car1.getCarName() << '\n';
+    cout << "car price is: " << car1.getCarPrice() << '\n';
+
+}
