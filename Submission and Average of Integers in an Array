@@ -1,0 +1,40 @@
+#include <iostream>
+#include <cmath>
+#include <sstream>
+using namespace std;
+
+double arrSum(double * arr);
+double arrSum(double * arr);
+
+double arrAvg(double arr[]) {
+    double numAvg;
+
+    numAvg = arrSum(arr) / 5.0;
+
+    return numAvg;
+}
+
+double arrSum(double arr[]) {
+    double arrSum = 0;
+
+    for(int i = 0; i < 5; i++) {
+        arrSum += arr[i];
+    }
+
+    return arrSum;
+}
+
+int main(){
+    double arr[5], userInput;
+
+    cout << "Enter 5 numbers: " << endl;
+
+    for(int i = 0; i < 5; i++) {
+        cin >> userInput;
+        arr[i] = userInput;
+    }
+    cout << "the Sum of all numbers is: " << arrSum(arr) << endl;
+    cout << "The avg number of all number is: " <<arrAvg(arr);
+
+    return 0;
+}
