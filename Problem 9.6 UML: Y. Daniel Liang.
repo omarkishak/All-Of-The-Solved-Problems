@@ -1,0 +1,21 @@
+---------------------------------
+|           Circle2D            |
+---------------------------------
+| -x: double                    |
+| -y: double                    |
+| -radius: double               |
+---------------------------------
+| +Circle2D()                   |
+| +Circle2D(x: double, y: double, radius: double) |
+| +getX(): double const          |
+| +getY(): double const          |
+| +setX(x: double): void         |
+| +setY(y: double): void         |
+| +getRadius(): double const     |
+| +setRadius(radius: double): void |
+| +getPerimeter(): double const  |
+| +getArea(): double const       |
+| +contains(x: double, y: double): boolean const |
+| +contains(circle: Circle2D): boolean const |
+| +overlaps(circle: Circle2D): boolean const |
+---------------------------------
