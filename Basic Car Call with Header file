@@ -1,0 +1,91 @@
+// main.cpp
+#include <iostream>
+#include "Car.h"
+using namespace std;
+
+int main()
+{
+    Car car1;
+    car1.setPrice(1000000);
+    car1.setModel("Audi");
+    car1.setFactory("Germany");
+    car1.setColor("Black");
+
+    cout << "Price: " << car1.getPrice() << endl;
+    cout << "Model: " << car1.getModel() << endl;
+    cout << "Factory: " << car1.getFactory() << endl;
+    cout << "Color: " << car1.getColor() << endl;
+
+    return 0;
+}
+/*____________________________________________________________________________________*/
+// Car.cpp
+#include "Car.h"
+#include <iostream>
+using namespace std;
+
+Car::Car() {
+    price = 0;
+    model = " ";
+    factory = " ";
+    color = " ";
+}
+
+Car::Car(double price, string model, string factory, string color) {
+    this->price = price;
+    this->model = model;
+    this->factory = factory;
+    this->color = color;
+}
+
+void Car::setPrice(double price) {
+    this->price = price;
+}
+void Car::setModel(string model) {
+    this->model = model;
+}
+void Car::setFactory(string factory) {
+    this->factory = factory;
+}
+void Car::setColor(string color) {
+    this->color = color;
+}
+
+double Car::getPrice() {
+    return price;
+}
+string Car::getModel() {
+    return model;
+}
+string Car::getFactory() {
+    return factory;
+}
+string Car::getColor() {
+    return color;
+}
+/*__________________________________________________________________*/
+//Car.h
+#ifndef CAR_H
+#define CAR_H
+#include <iostream>
+using namespace std;
+
+class Car {
+private:
+    double price;
+    string model, factory, color;
+
+public:
+    Car();
+    Car(double price, string model, string factory, string color);
+    void setPrice(double price);
+    void setModel(string model);
+    void setFactory(string factory);
+    void setColor(string color);
+    double getPrice();
+    string getModel();
+    string getFactory();
+    string getColor();
+};
+
+#endif
