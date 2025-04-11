@@ -1,0 +1,80 @@
+/*____________________________________Main____________________________________*/
+#include <iostream>
+#include <algorithm>
+#include <ctime>
+#include "Time.h"
+#include "stacksOfInt.h"
+using namespace std;
+
+int main()
+{
+    int currentTime = time(nullptr);
+    cout << "Seconds since Jan 1, 1970: " << currentTime << endl;
+
+    return 0;
+}
+/*____________________________________Time.cpp____________________________________*/
+#include "Time.h"
+#include <sstream>
+#include <iostream>
+using namespace std;
+
+Time::Time() {
+    seconds = minutes = hours = 0;
+}
+
+Time::Time(time_t seconds) {
+    this->seconds = seconds;
+}
+
+Time::Time(int seconds, int minutes, int hours) {
+    this->seconds = seconds;
+    this->minutes = minutes;
+    this->hours = hours;
+}
+
+int Time::getSeconds() {
+    return seconds;
+}
+
+int Time::getMinutes() {
+    return minutes;
+}
+
+int Time::getHours() {
+    return hours;
+}
+
+void Time::setSeconds(int seconds) {
+    this->seconds = seconds;
+}
+
+void Time::setMinutes(int minutes) {
+    this->minutes = minutes;
+}
+
+void Time::setHours(int hours) {
+    this->hours = hours;
+}
+/*____________________________________Time.h____________________________________*/
+#ifndef TIME_H
+#define TIME_H
+#include <ctime>
+
+
+class Time {
+private:
+    int hours, minutes, seconds;
+public:
+    Time();
+    Time(time_t seconds);
+    Time(int hours, int minutes, int second);
+    int getHours();
+    int getMinutes();
+    int getSeconds();
+    void setHours(int hours);
+    void setMinutes(int minutes);
+    void setSeconds(int seconds);
+};
+
+#endif
