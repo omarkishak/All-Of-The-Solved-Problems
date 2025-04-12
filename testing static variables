@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+class qTest {
+public:
+    static int high;
+
+    void setHigh(int h) {
+        high = h;
+    }
+
+ int getHigh() {
+        return high;
+    }
+};
+
+int qTest::high = 5;
+
+int main() {
+    qTest case1;
+    qTest case2;
+    qTest case3;
+
+    cout << case3.getHigh() << endl;
+    case2.setHigh(123);
+    cout << case1.getHigh();
+
+    return 0;
+}
