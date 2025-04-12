@@ -1,0 +1,32 @@
+#include "Car.h"
+int Car::count = 0;
+
+Car::Car() {
+    factoryYear = 0;
+    name = model = "n";
+}
+
+Car::Car(int factorYear, string name, string model) {
+    this->factoryYear = factorYear;
+    this->name = name;
+    this->model = model;
+}
+
+int Car::getFactorYear() {
+    return factoryYear;
+}
+string Car::getName() {
+    return name;
+}
+string Car::getModel() {
+    return model;
+}
+void Car::setFactorYear(int factoryYear) {
+    this->factoryYear = factoryYear;
+}
+void Car::setName(string name) {
+    this->name = name;
+}
+void Car::setModel(string model) {
+    this->model = model;
+}
