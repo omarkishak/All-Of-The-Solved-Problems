@@ -1,0 +1,53 @@
+#include <iostream>
+#include <stdexcept> 
+
+class MyArray {
+private:
+    static const int SIZE = 5;  
+    int data[SIZE];            
+
+public:
+    MyArray() {
+        for (int i = 0; i < SIZE; ++i) {
+            data[i] = 0;
+        }
+    }
+
+    int& operator[](int index) {
+        if (index < 0 || index >= SIZE) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data[index];
+    }
+
+    const int& operator[](int index) const {
+        if (index < 0 || index >= SIZE) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data[index];
+    }
+
+    void display() const {
+        std::cout << "Array contents: ";
+        for (int i = 0; i < SIZE; ++i) {
+            std::cout << data[i] << " ";
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    MyArray arr;
+
+    for (int i = 0; i < 5; ++i) {
+        arr[i] = i * 10;  
+    }
+
+    arr.display();
+
+    const MyArray constArr = arr;
+    std::cout << "Element at index 3 is: " << constArr[3] << std::endl;
+
+
+    return 0;
+}
