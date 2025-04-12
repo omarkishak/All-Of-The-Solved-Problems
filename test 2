@@ -1,0 +1,29 @@
+#include <iostream>
+
+class Example {
+public:
+    int value; // instance variable
+
+    // Normal member function
+    void printValue() const {
+        std::cout << "Instance value: " << value << std::endl;
+    }
+
+    // Static member function
+    static void showMessage() {
+        std::cout << "This is a static function. No instance is needed." << std::endl;
+        // Cannot access "value" because there is no "this" pointer.
+    }
+};
+
+int main() {
+    // Calling static function without an instance
+    Example::showMessage();
+
+    // Creating an instance to use non-static member function
+    Example obj;
+    obj.value = 42;
+    obj.printValue();
+
+    return 0;
+}
