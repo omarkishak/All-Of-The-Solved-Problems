@@ -1,0 +1,55 @@
+#include <ctime>
+#include <iostream>
+using namespace std;
+
+class MyDate {
+private:
+    int year;
+    int month;
+    int day;
+
+public:
+    MyDate() {
+        time_t now = time(0);
+        tm* gmt = gmtime(&now);
+        year = 1900 + gmt->tm_year;
+        month = gmt->tm_mon;
+        day = gmt->tm_mday;
+    }
+
+    MyDate(long elapsedTime) {
+        time_t t = elapsedTime;
+        tm* gmt = gmtime(&t);
+        year = 1900 + gmt->tm_year;
+        month = gmt->tm_mon;
+        day = gmt->tm_mday;
+    }
+
+    MyDate(int y, int m, int d) : year(y), month(m), day(d) {}
+
+    int getYear() const { return year; }
+    int getMonth() const { return month; }
+    int getDay() const { return day; }
+
+    void setYear(int y) { year = y; }
+    void setMonth(int m) { month = m; }
+    void setDay(int d) { day = d; }
+
+    void setDate(long elapsedTime) {
+        time_t t = elapsedTime;
+        tm* gmt = gmtime(&t);
+        year = 1900 + gmt->tm_year;
+        month = gmt->tm_mon;
+        day = gmt->tm_mday;
+    }
+};
+
+int main() {
+    MyDate date1;
+    MyDate date2(3435555513);
+
+    cout << "Date 1: " << date1.getYear() << "-" << date1.getMonth() << "-" << date1.getDay() << endl;
+    cout << "Date 2: " << date2.getYear() << "-" << date2.getMonth() << "-" << date2.getDay() << endl;
+
+    return 0;
+}
