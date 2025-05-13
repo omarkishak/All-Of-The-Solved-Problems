@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+class person {
+private :
+    string name;
+    int age;
+
+protected:
+    string nationality;
+
+public:
+    person() {
+        name = "none";
+        nationality = "none";
+        age = 0;
+    }
+
+    person(string sName, string sNation, int age) {
+        name = sName;
+        nationality = sNation;
+        this-> age = age;
+    }
+
+    virtual void displayInfo() {
+        cout << "name: " << name<< "/ age: " << age << "/ nationality: " << nationality;
+    }
+
+    ~person() {
+        cout << "object is destroyed";
+    }
+};
+
+class student : public person {
+private:
+    int ID, GPA;
+
+public:
+    student(string sName, string sNation, int age, int ID, int GPA) : person(sName, sNation, age) {
+        this -> ID = ID;
+        this -> GPA = GPA;
+    }
+    void displayInfo() {
+        person::displayInfo();
+        cout << endl << "gpa: " << GPA << "/ ID: " << endl;
+    }
+
+};
+
+int main() {
+
+    person* pr_ptr;
+    person omar("omar", "egypt", 20);
+    student omar2("omar2", "egypt2", 22, 24000489, 3.9);
+
+    pr_ptr = &omar;
+    pr_ptr->displayInfo();
+
+    pr_ptr = &omar2;
+    pr_ptr-> displayInfo();
+
+}
