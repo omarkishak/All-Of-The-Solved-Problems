@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int vlaue = 500;
+    Node* next;
+};
+
+static void printList() {
+
+}
+
+int main() {
+    int* randomVar = new int;
+    Node* head = new Node();
+    Node* node2 = new Node();
+    Node* node3 = new Node();
+    Node* tail = new Node();
+
+    head->vlaue = 1;
+    head->next = node2;
+
+    node2->vlaue = 2;
+    node2->next = node3;
+
+    node3->vlaue = 3;
+    node3->next = tail;
+
+    tail->vlaue = 0;
+    tail->next = NULL;
+
+    return 0;
+}
