@@ -1,4 +1,3 @@
-/*
 1- The problem's name is always enough to find the problem is have solved
 
 2- every time I increase the number of #n starting from n = 1,
