@@ -1,0 +1,250 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stdexcept>
+
+using namespace std;
+
+// Custom exception type
+class InvalidValueException : public std::runtime_error {
+public:
+    InvalidValueException(const string& msg) : runtime_error(msg) {}
+};
+
+/* ------------------------------
+   Base class: Vehicle
+   - demonstrates constructor/destructor
+   - virtual destructor for safe polymorphic deletion
+   - virtual method for overriding (polymorphism)
+   ------------------------------ */
+class Vehicle {
+protected:           // derived classes can access these members
+    string model;
+    int year;
+
+public:
+    Vehicle(const string& m = "unknown", int y = 0)
+        : model(m), year(y) {
+        cout << "Vehicle constructed: " << model << " (" << year << ")\n";
+    }
+
+    /*Rememeber, we use "virtual" so the object can be used in derived classes,
+     *if we don't, the object is never gonna be passed tothe dervied classes.*/
+    virtual ~Vehicle() { // virtual destructor: once the compiler is done running the class, object is going to be destroyed.
+        cout << "Vehicle destructed: " << model << "\n";
+    }
+
+    // Virtual method to be overridden by derived classes
+    /*Quick reminder: uses of "cosnt"
+     *1-- is it's before paramters "void car(const int x, int y)" that means x can never be changed inside the function
+     *if it's passes to the function x = 5, you can never change it to x = 7 inside the function.
+     *2-- before the function itself "const int get()", it means the return value itself is read-only
+     *You can use the returned number but can’t modify it if it’s used as an l-value.
+     *3-- before {} "void car() const { … }" means this member function promises not to modify the object’s data members.*/
+    virtual void info() const {
+        cout << "Vehicle: " << model << " - " << year << "\n";
+    }
+};
+
+/* ------------------------------
+   Interface-like classes (pure virtual)
+   - show multiple inheritance later
+   ------------------------------ */
+class Drivable {
+public:
+    virtual void drive() = 0;
+    virtual ~Drivable() = default;
+};
+
+class Maintainable {
+public:
+    virtual void service() = 0;
+    virtual ~Maintainable() = default;
+};
+
+/* ------------------------------
+   Car class (inherits from Vehicle, implements Drivable & Maintainable)
+   - demonstrates constructor, destructor
+   - encapsulation via private members + getters/setters
+   - setter validates and throws exception on invalid input
+   - overriding info()
+   - function overloading example: accelerate() overloaded
+   ------------------------------ */
+class Car : public Vehicle, public Drivable, public Maintainable {
+private:
+    // private: encapsulation -> only Car can access directly
+    double speed;       // current speed in km/h
+    double fuel;        // fuel level in liters
+public:
+    // Constructor (calls Vehicle constructor)
+    Car(const string& m, int y, double f = 0.0)
+        : Vehicle(m, y), speed(0.0), fuel(f) {
+        cout << "Car constructed: " << model << "\n";
+    }
+
+    // Destructor
+    ~Car() override {
+        cout << "Car destructed: " << model << "\n";
+    }
+
+    // Getter (const-correct)
+    double getSpeed() const { return speed; }
+    double getFuel() const  { return fuel; }
+
+    // Setter with validation: demonstrates exception handling
+    void setFuel(double f) {
+        if (f < 0) throw InvalidValueException("Fuel cannot be negative");
+        fuel = f;
+    }
+
+    // Overloading: accelerate with no args (default increment)
+    void accelerate() { accelerate(10.0); }          
+    // Overloading: accelerate with amount (km/h)
+    void accelerate(double delta) {                   
+        if (delta < 0) throw InvalidValueException("delta must be >= 0");
+        speed += delta;
+        cout << model << " accelerated by " << delta << " km/h, now " << speed << " km/h\n";
+    }
+
+    // Overriding virtual method info()
+    void info() const override {
+        cout << "Car: " << model << " (" << year << ") - Speed: " << speed
+             << " km/h, Fuel: " << fuel << " L\n";
+    }
+
+    // Implement Drivable
+    void drive() override {
+        if (fuel <= 0) throw InvalidValueException("Can't drive: no fuel");
+        cout << model << " is driving...\n";
+        // simple behavior, consume fuel
+        fuel -= 1.0;
+        if (fuel < 0) fuel = 0;
+    }
+
+    // Implement Maintainable
+    void service() override {
+        cout << model << " serviced.\n";
+        // e.g., top up fluids (not realistic, just demonstration)
+        fuel += 5.0;
+    }
+};
+
+/* ------------------------------
+   Demonstrate inheritance access modifiers:
+   - public inheritance: public/protected stay visible as public/protected
+   - protected inheritance: public/protected become protected
+   - private inheritance: public/protected become private
+   This small snippet shows intent; trying to access members in main will show
+   what is allowed and what is not (comments explain).
+   ------------------------------ */
+class BaseExample {
+public:
+    int a = 1;
+protected:
+    int b = 2;
+private:
+    int c = 3;
+};
+
+class PubDerived : public BaseExample {    // public inheritance
+public:
+    void print() {
+        cout << "PubDerived: a=" << a << " b=" << b << "\n"; // ok
+        // cout << c; // not accessible: private in base
+    }
+};
+
+class ProtDerived : protected BaseExample { // protected inheritance
+public:
+    void print() {
+        cout << "ProtDerived: a=" << a << " b=" << b << "\n"; // ok inside class
+    }
+};
+
+class PrivDerived : private BaseExample {   // private inheritance
+public:
+    void print() {
+        cout << "PrivDerived: a=" << a << " b=" << b << "\n"; // ok inside class
+    }
+};
+
+/* ------------------------------
+   Multiple inheritance & diamond problem (virtual inheritance)
+   - Vehicle is the top base; Car2 and Plane both virtually inherit Vehicle
+   - FlyingCar inherits from both Car2 and Plane -> single Vehicle subobject
+   ------------------------------ */
+class Car2 : virtual public Vehicle {
+public:
+    Car2(const string& m = "car2", int y = 0) : Vehicle(m,y) {}
+    void info() const override { cout << "Car2 info\n"; }
+};
+
+class Plane : virtual public Vehicle {
+public:
+    Plane(const string& m = "plane", int y = 0) : Vehicle(m,y) {}
+    void info() const override { cout << "Plane info\n"; }
+};
+
+class FlyingCar : public Car2, public Plane {
+public:
+    FlyingCar(const string& m, int y) : Vehicle(m,y), Car2(m,y), Plane(m,y) {}
+    void info() const override { cout << "FlyingCar: " << model << " (" << year << ")\n"; }
+};
+
+/* ------------------------------
+   Main: demonstrate everything
+   ------------------------------ */
+int main() {
+    cout << "=== Constructing objects ===\n";
+    Car myCar("Toyota", 2020, 10.0);
+
+    cout << "\n=== Using getters and setters (with exception handling) ===\n";
+    try {
+        cout << "Fuel before: " << myCar.getFuel() << " L\n";
+        myCar.setFuel(8.5);
+        cout << "Fuel after: " << myCar.getFuel() << " L\n";
+        // this will throw
+        // myCar.setFuel(-5);
+    } catch (const InvalidValueException& ex) {
+        cout << "Caught error: " << ex.what() << "\n";
+    }
+
+    cout << "\n=== Overloading vs Overriding ===\n";
+    myCar.accelerate();        // calls accelerate()
+    myCar.accelerate(15.0);    // overloaded version
+
+    cout << "\n=== Polymorphism: base pointer to derived object ===\n";
+    Vehicle* vptr = &myCar;    // upcast
+    vptr->info();              // calls Car::info (overriding) -> runtime polymorphism
+
+    cout << "\n=== Using interface methods ===\n";
+    Drivable* d = &myCar;
+    Maintainable* m = &myCar;
+    try {
+        d->drive();          // run-time bound to Car::drive
+        cout << "Fuel now: " << myCar.getFuel() << " L\n";
+    } catch (const InvalidValueException& ex) {
+        cout << "Drive failed: " << ex.what() << "\n";
+    }
+    m->service();
+    cout << "Fuel after service: " << myCar.getFuel() << " L\n";
+
+    cout << "\n=== Demonstrate inheritance access modes (calls inside classes) ===\n";
+    PubDerived pd; pd.print();
+    ProtDerived pr; pr.print();
+    PrivDerived pv; pv.print();
+
+    cout << "\n=== Multiple inheritance & diamond (virtual) ===\n";
+    FlyingCar fc("AeroCar", 2030);
+    Vehicle* vfc = &fc;
+    vfc->info();   // calls FlyingCar::info
+
+    cout << "\n=== Polymorphic collection ===\n";
+    vector<Vehicle*> fleet;
+    fleet.push_back(&myCar);
+    fleet.push_back(&fc);
+    for (auto veh : fleet) veh->info();  // virtual dispatch
+
+    cout << "\n=== Destruction will occur automatically ===\n";
+    return 0;
+}
