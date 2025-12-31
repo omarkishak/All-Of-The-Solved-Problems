@@ -1,0 +1,164 @@
+#include <iostream>
+using namespace std;
+
+// Node structure
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+// Linked List class
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    LinkedList() {
+        head = nullptr;
+    }
+
+    // Insert at the beginning
+    void insertAtHead(int value) {
+        Node* newNode = new Node(value);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Insert at the end
+    void insertAtTail(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {
+            head = newNode;
+            return;
+        }
+
+        Node* temp = head;
+        while (temp->next != nullptr) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+
+    // Insert at a specific position
+    void insertAtPosition(int position, int value) {
+        if (position == 1) {
+            insertAtHead(value);
+            return;
+        }
+
+        Node* newNode = new Node(value);
+        Node* temp = head;
+
+        for (int i = 1; i < position - 1 && temp != nullptr; i++) {
+            temp = temp->next;
+        }
+
+        if (temp == nullptr) {
+            cout << "Position out of range!\n";
+            return;
+        }
+
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+    // Delete a node by value
+    void deleteNode(int value) {
+        if (head == nullptr) return;
+
+        if (head->data == value) {
+            Node* toDelete = head;
+            head = head->next;
+            delete toDelete;
+            return;
+        }
+
+        Node* temp = head;
+        while (temp->next != nullptr && temp->next->data != value) {
+            temp = temp->next;
+        }
+
+        if (temp->next == nullptr) {
+            cout << "Value not found!\n";
+            return;
+        }
+
+        Node* toDelete = temp->next;
+        temp->next = temp->next->next;
+        delete toDelete;
+    }
+
+    // Search for a value
+    bool search(int value) {
+        Node* temp = head;
+        while (temp != nullptr) {
+            if (temp->data == value) return true;
+            temp = temp->next;
+        }
+        return false;
+    }
+
+    // Reverse the linked list
+    void reverseList() {
+        Node* prev = nullptr;
+        Node* current = head;
+        Node* next = nullptr;
+
+        while (current != nullptr) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+
+        head = prev;
+    }
+
+    // Print the list
+    void printList() {
+        Node* temp = head;
+        while (temp != nullptr) {
+            cout << temp->data << " -> ";
+            temp = temp->next;
+        }
+        cout << "NULL\n";
+    }
+};
+
+// Driver code
+int main() {
+    LinkedList list;
+
+    list.insertAtHead(3);
+    list.insertAtHead(2);
+    list.insertAtHead(1);
+
+    list.insertAtTail(4);
+    list.insertAtTail(5);
+
+    cout << "Linked List: ";
+    list.printList();
+
+    list.insertAtPosition(3, 99);
+    cout << "After inserting 99 at position 3: ";
+    list.printList();
+
+    list.deleteNode(4);
+    cout << "After deleting 4: ";
+    list.printList();
+
+    cout << "Searching for 99: " << (list.search(99) ? "Found" : "Not Found") << endl;
+
+    list.reverseList();
+    cout << "Reversed List: ";
+    list.printList();
+
+    return 0;
+}
