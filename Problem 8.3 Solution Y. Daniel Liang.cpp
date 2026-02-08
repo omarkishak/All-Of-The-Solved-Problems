@@ -5,7 +5,7 @@ int main() {
     int mainArr[4][4], numInput;
     int studentsCount = 0;
 
-    cout << "Enter all of 16's students correct answers count: ";
+    cout << "Enter all of 16's students' correct answers count: ";
     for(int i = 0; i < 4; i++) {
         int j = 0;
 
