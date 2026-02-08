@@ -7,14 +7,14 @@
 class Solution:
     def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
 
-#first we just make sure the root isn't empty
+#first, we just make sure the root isn't empty
         if not root:
             return TreeNode(val)
 
 #saving the root to return it later once modified
         retRoot = root
 
-#Basically for every node, we will check if it's value is bigger or smaller than the value we wanna inject, until we hit a node with null left and right, then we do the injection
+#Basically, for every node, we will check if its value is bigger or smaller than the value we wanna inject, until we hit a node with null left and right, then we do the injection
         while root:
             if root.left == None or root.right == None:
                 if root.val < val:
